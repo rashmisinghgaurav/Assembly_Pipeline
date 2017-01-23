@@ -1,69 +1,30 @@
-private_key = data_bag_item('keys', 'private_key')['key']
-#node.run_state[:jenkins_private_key] = private_key
+#ruby_block "replace_line" do
+#  block do
+#    file = Chef::Util::FileEdit.new("#{node['jenkins']['master']['home']}/config.xml")
+#    file.search_file_replace_line("/<useSecurity>true</useSecurity>/", "<useSecurity>false</useSecurity>")
+#    file.write_file
+#  end
+#  notifies :restart, 'service[jenkins]', :immediately
+#end
 
-jenkins_script 'configure permissions' do
-  command <<-EOH.gsub(/^ {4}/, '')
-    import jenkins.model.*
-    import hudson.security.*
-    def instance = Jenkins.getInstance()
-    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-    instance.setSecurityRealm(hudsonRealm)
-    def strategy = new GlobalMatrixAuthorizationStrategy()
-    strategy.add(Jenkins.ADMINISTER, 'anonymous')
-strategy.add(hudson.model.Hudson.READ,'anonymous')
-strategy.add(hudson.model.Item.BUILD,'anonymous')
-strategy.add(hudson.model.Item.CANCEL,'anonymous')
-strategy.add(hudson.model.Item.DISCOVER,'anonymous')
-strategy.add(hudson.model.Item.READ,'anonymous')
-  strategy.add(hudson.model.Hudson.ADMINISTER,'anonymous')
-  strategy.add(hudson.PluginManager.CONFIGURE_UPDATECENTER,'anonymous')
-  strategy.add(hudson.model.Hudson.READ,'anonymous')
-  strategy.add(hudson.model.Hudson.RUN_SCRIPTS,'anonymous')
-  strategy.add(hudson.PluginManager.UPLOAD_PLUGINS,'anonymous')
-    instance.setAuthorizationStrategy(strategy)
-    instance.save()
-  EOH
+template "#{node['jenkins']['master']['home']}/config.xml" do
+ source "config.xml.erb"
+ user node['jenkins']['master']['user']
+ group node['jenkins']['master']['group']
+# notifies :stop, 'service[jenkins]', :immediately
+ notifies :restart, 'service[jenkins]', :immediately
 end
 
-
-
-ruby_block 'set jenkins private key' do
-  block do
-    node.run_state[:jenkins_private_key] = 'private_key'
-  end
-  only_if { node.attribute?('security_enabled') }
+#jenkins_plugin 'matrix-auth' 
+#jenkins_plugin 'credentials'
+#jenkins_plugin 'ssh-slaves' 
+jenkins_plugin 'credentials' do
+notifies :restart, 'service[jenkins]', :immediately
 end
 
-jenkins_user 'admin' do
- password "admin"
- public_keys ['ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAn79M3W0/rvUTSHztSv3EqO11W9Y/1TxlsirpZ3JjcxHnvu3BVB81W4sJzoi14ZQ219nvJ3owatWcJHvTgzgpamHEIivIif7HN1zAmJIpIFSUn8/LcB1Eo93ox4g2P0p4HAs+BsiwvnrjmDuih7IK/e7/zRuaKxCxli49e21FDuDT3vk+4d6T8XLWbD97r7tWDRgB0ZkOr0FSIHETnKlzgQG4H7oiv2+805dZSuKh73hCicfLdPgU/cc8qB2t60IoR1ke3NeuOce+LuNvPHVHmZV0NBapJ70xnTqMXKud/bqtmEx0xgY9RIVzFF90FQBJeySn2MmYOB0mtZR/aNdHOQ== rsa-key-20170120']
- not_if { node.attribute?('security_enabled') }
-  notifies :execute, 'jenkins_script[configure permissions]', :immediately
-end
+#jenkins_command 'safe-restart'
 
-jenkins_script 'configure permissions' do
-  command <<-EOH.gsub(/^ {4}/, '')
-    import jenkins.model.*
-    import hudson.security.*
-    def instance = Jenkins.getInstance()
-    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-    instance.setSecurityRealm(hudsonRealm)
-    def strategy = new GlobalMatrixAuthorizationStrategy()
-    strategy.add(Jenkins.ADMINISTER, "admin")
-    strategy.add(hudson.model.Hudson.READ,'anonymous')
-    instance.setAuthorizationStrategy(strategy)
-    instance.save()
-  EOH
-  notifies :create, 'ruby_block[set the security_enabled flag]', :immediately
-  action :nothing
-end
-
-
-ruby_block 'set the security_enabled flag' do
-  block do
-    node.run_state[:jenkins_private_key] = 'private_key'
-    node.set['security_enabled'] = true
-    node.save
-  end
-  action :nothing
-end
+#Chef::Log.info("Delaying chef execution")
+#execute 'delay' do
+#  command 'sleep 90'
+#end
