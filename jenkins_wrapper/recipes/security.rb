@@ -15,12 +15,19 @@ template "#{node['jenkins']['master']['home']}/config.xml" do
  notifies :restart, 'service[jenkins]', :immediately
 end
 
-#jenkins_plugin 'matrix-auth' 
-#jenkins_plugin 'credentials'
-#jenkins_plugin 'ssh-slaves' 
-jenkins_plugin 'credentials' do
-notifies :restart, 'service[jenkins]', :immediately
+
+Chef::Log.info("Delaying chef execution")
+execute 'delay' do
+  command 'sleep 60'
 end
+
+
+jenkins_plugin 'matrix-auth' 
+jenkins_plugin 'credentials'
+jenkins_plugin 'ssh-slaves' 
+#jenkins_plugin 'credentials' do
+#notifies :restart, 'runit_service[jenkins]', :immediately
+#end
 
 #jenkins_command 'safe-restart'
 
@@ -28,3 +35,10 @@ end
 #execute 'delay' do
 #  command 'sleep 90'
 #end
+
+bash 'restart_jenkins' do
+  code <<-EOH
+  #/sbin/sv -w '120' stop /etc/service/jenkins    
+  kill -9 $(ps aux | grep 'jenkins.war --httpPort=8080' | awk '{print $2}')
+EOH
+end
