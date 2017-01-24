@@ -6,8 +6,7 @@ node['jenkins']['configure_slaves']['slave_ip'].each do |slave_ip|
 
   ##SSH specific attributes
   host   slave_ip
-  user   "user"
-  credentials 'aniketm4-password'
+  user   node['jenkins']['master']['user']
   usage_mode "normal"
   availability "always"
  end

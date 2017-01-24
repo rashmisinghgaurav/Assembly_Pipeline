@@ -1,3 +1,11 @@
+bash 'start_jenkins' do
+  code <<-EOH
+  #/sbin/sv -w '120' start /etc/service/jenkins
+  service jenkins start
+EOH
+end
+
+
 admin_key = Chef::EncryptedDataBagItem.load('keys', 'private_key')['key']
 node.run_state[:jenkins_private_key] = admin_key
 
