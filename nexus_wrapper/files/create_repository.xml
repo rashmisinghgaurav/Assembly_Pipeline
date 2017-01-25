@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository>
+    <data>
+        <format>maven2</format>
+        <providerRole>org.sonatype.nexus.proxy.repository.Repository</providerRole>
+        <exposed>true</exposed>
+        <id>my-releases</id>
+        <name>MyReleases</name>
+        <contentResourceURI>http://localhost:8081/nexus/content/repositories/my-releases</contentResourceURI>
+        <repoType>hosted</repoType>
+        <provider>maven2</provider>
+    </data>
+</repository>
