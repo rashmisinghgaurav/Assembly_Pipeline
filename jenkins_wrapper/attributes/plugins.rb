@@ -1,1 +1,1 @@
-default['jenkins']['master']['plugins_list'] = [ 'git','build-pipeline-plugin','greenballs','ssh-credentials','ssh-slaves','mailer' ]
+default['jenkins']['master']['plugins_list'] = [ 'git','build-pipeline-plugin','greenballs','ssh-credentials','ssh-slaves','mailer','sonar','junit','nexus-artifact-uploader','github','git-client','jenkins-jira-issue-updater','jira','jira-ext','docker-plugin','jquery','conditional-buildstep','matrix-project','run-condition','maven-plugin' ]
