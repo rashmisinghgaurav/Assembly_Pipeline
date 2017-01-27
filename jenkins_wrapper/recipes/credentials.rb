@@ -5,3 +5,9 @@ jenkins_password_credentials 'user' do
   password    aniketm4
 end
 
+jenkins_password_credentials 'OrclDemo' do
+  id          'al-password'
+  description 'Username and password for AssemblyLine GitHub Repo'
+  password    'ATBG91dY'
+end
+

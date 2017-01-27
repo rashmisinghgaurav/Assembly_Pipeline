@@ -18,9 +18,9 @@ template "#{node['jenkins']['master']['home']}/hudson.plugins.sonar.SonarGlobalC
 end
 
 ### Configure GIT on jenkins global tool configuration
-package 'git' do
- action :install
-end
+package 'git'
+package 'maven'
+
 
 template "#{node['jenkins']['master']['home']}/hudson.plugins.git.GitTool.xml" do
  source 'hudson.plugins.git.GitTool.xml.erb'

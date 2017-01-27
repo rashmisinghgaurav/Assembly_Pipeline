@@ -14,7 +14,10 @@ template "#{node['jenkins']['master']['home']}/config.xml" do
  notifies :restart, 'service[jenkins]', :immediately
 end
 
-
+Chef::Log.info("Delaying chef execution")
+execute 'delay' do
+  command 'sleep 60'
+end
 
 jenkins_plugin 'matrix-auth' 
 jenkins_plugin 'ssh-slaves' 

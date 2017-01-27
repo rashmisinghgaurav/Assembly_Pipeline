@@ -6,6 +6,7 @@
 
 node.override['jenkins']['master']['install_method'] = node['jenkins']['master']['install_method']
 node.override['jenkins']['master']['runit']['sv_timeout'] = node['jenkins']['master']['runit']['sv_timeout']
+node.override['jenkins']['master']['repository'] = "http://pkg.jenkins.io/redhat"
 #node.override['jenkins']['master']['version'] = node['jenkins']['master']['version']
 #node.override['jenkins']['master']['host'] = '10.184.247.9'
 #node.override['jenkins']['master']['version'] = '1.642-1.1'
