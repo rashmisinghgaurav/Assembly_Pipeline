@@ -17,7 +17,7 @@ node.override['jenkins']['master']['repository'] = "http://pkg.jenkins.io/redhat
 include_recipe 'jenkins::master'
 
 #Global configuration
- Chef::Log.info("Java home: #{node['jenkins']['java']}:")
+# Chef::Log.info("Java home: #{node['jenkins']['java']}:")
 
 #Port Change
 # node.default['jenkins']['master']['port'] = 8085

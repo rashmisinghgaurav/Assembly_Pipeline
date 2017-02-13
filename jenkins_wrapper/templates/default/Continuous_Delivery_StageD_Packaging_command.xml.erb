@@ -35,32 +35,26 @@
   <builders>
     <hudson.tasks.Maven>
       <targets>install package</targets>
-      <mavenName>MAVEN</mavenName>
+      <mavenName>Maven</mavenName>
       <pom>CounterWebApp/pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
-      <injectBuildVariables>false</injectBuildVariables>
+      <injectBuildVariables>true</injectBuildVariables>
     </hudson.tasks.Maven>
-    <sp.sd.nexusartifactuploader.NexusArtifactUploader plugin="nexus-artifact-uploader@2.9">
-      <nexusVersion>nexus2</nexusVersion>
-      <protocol>http</protocol>
-      <nexusUrl>aniketm3.mylabserver.com:8081/nexus/content/repositories/releases</nexusUrl>
-      <groupId>com.mykong</groupId>
-      <version>${BUILD_NUMBER}</version>
-      <repository>releases</repository>
-      <artifacts>
-        <sp.sd.nexusartifactuploader.Artifact>
-          <artifactId>CounterWebApp</artifactId>
-          <type>war</type>
-          <classifier>build-notes</classifier>
-          <file>CounterWebApp/target/CounterWebApp.war</file>
-        </sp.sd.nexusartifactuploader.Artifact>
-      </artifacts>
-      <credentialsId>nexus-admin</credentialsId>
-    </sp.sd.nexusartifactuploader.NexusArtifactUploader>
+    <hudson.tasks.Shell>
+      <command>echo &quot;This is a Demo Build to UAT Environment&quot; &gt;build.txt</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Maven>
+      <targets>deploy:deploy-file -Durl=http://localhost:8081/nexus/content/repositories/releases/release-repo  -Dclassifiers=build-notes  -DrepositoryId=release-repo  -Dtypes=txt  -Dfile=target/CounterWebApp.war  -Dfiles=build.txt  -DgroupId=com.mykong  -DartifactId=CounterWebApp  -Dversion=${BUILD_NUMBER}.UAT -Dpackaging=war</targets>
+      <mavenName>Maven</mavenName>
+      <pom>CounterWebApp/pom.xml</pom>
+      <usePrivateRepository>false</usePrivateRepository>
+      <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+      <injectBuildVariables>true</injectBuildVariables>
+    </hudson.tasks.Maven>
   </builders>
   <publishers/>
   <buildWrappers/>
 </project>
-

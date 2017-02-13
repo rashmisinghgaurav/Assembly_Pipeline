@@ -16,7 +16,7 @@ end
 
 Chef::Log.info("Delaying chef execution")
 execute 'delay' do
-  command 'sleep 60'
+  command 'sleep 120'
 end
 
 jenkins_plugin 'matrix-auth' 

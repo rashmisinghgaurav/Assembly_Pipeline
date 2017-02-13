@@ -25,8 +25,8 @@
   <customWorkspace>${JENKINS_HOME}/workspace/OrclDemo</customWorkspace>
   <builders>
     <hudson.tasks.Maven>
-      <targets>sonar:sonar -Dsonar.hosts.url=https://localhost:9000</targets>
-      <mavenName>Maven</mavenName>
+      <targets>sonar:sonar -Dsonar.host.url=http://aniketm3.mylabserver.com:8084/</targets>
+      <mavenName>(Default)</mavenName>
       <pom>CounterWebApp/pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
@@ -35,7 +35,6 @@
     </hudson.tasks.Maven>
   </builders>
   <publishers/>
-  <buildWrappers>
-    <hudson.plugins.sonar.SonarBuildWrapper plugin="sonar@2.5"/>
-  </buildWrappers>
+  <buildWrappers/>
 </project>
+

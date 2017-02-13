@@ -13,10 +13,12 @@ end
 
 docker_image 'sonatype/nexus' do
   action :pull
+  not_if "docker images sonatype/nexus | grep sonatype/nexus"
 end
 
 docker_volume 'nexus' do
   action :create
+  not_if "docker volume ls | grep nexus"
 end
 
 docker_container 'nexus' do
@@ -42,16 +44,31 @@ bash "copy json to container" do
 end
 
 
+ruby_block 'wait for nexus' do
+ block do
+  loop do
+   puts "Nexus is getting ready"
+   sleep 10
+   ` curl "http://localhost:8081/nexus/" `
+   exitstatus = $?.exitstatus
+   if exitstatus == 0
+     break
+   end
+  end
+ end
+end
 
 bash "create_release_repo" do
   code <<-EOH
   docker exec nexus curl -i -v -H "Content-Type:application/json" -H "Accept: application/json" -d "@/tmp/create_release_repository.json" -X POST -u admin:admin123 http://localhost:8081/nexus/service/local/repositories
   EOH
+  not_if "  docker exec nexus curl -i -v -H 'Content-Type:application/json' -H 'Accept: application/json' -X GET -u admin:admin123 http://localhost:8081/nexus/service/local/repositories/release-repo"
 end
 
-bash "create_release_repo" do
+bash "create_snapshot_repo" do
   code <<-EOH
   docker exec nexus curl -i -v -H "Content-Type:application/json" -H "Accept: application/json" -d "@/tmp/create_snapshot_repository.json" -X POST -u admin:admin123 http://localhost:8081/nexus/service/local/repositories
-  EOH
+EOH
+  not_if "  docker exec nexus curl -i -v -H 'Content-Type:application/json' -H 'Accept: application/json' -X GET -u admin:admin123 http://localhost:8081/nexus/service/local/repositories/snapshot-repo"
 end
 

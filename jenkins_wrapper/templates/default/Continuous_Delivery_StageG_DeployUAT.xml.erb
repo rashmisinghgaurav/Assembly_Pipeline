@@ -5,14 +5,15 @@
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.scm.NullSCM"/>
-  <canRoam>true</canRoam>
+  <assignedNode>aniketm5.mylabserver.com</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <jenkins.triggers.ReverseBuildTrigger>
       <spec></spec>
-      <upstreamProjects>Continuous_Delivery_StageD_Packaging,</upstreamProjects>
+      <upstreamProjects>Continuous_Delivery_StageF_FunctionalTest</upstreamProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
@@ -22,7 +23,7 @@
     </jenkins.triggers.ReverseBuildTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>${JENKINS_HOME}/workspace/OrclDemo</customWorkspace>
+  <customWorkspace>/workspace/OrclDemo</customWorkspace>
   <builders/>
   <publishers>
     <hudson.plugins.deploy.DeployPublisher plugin="deploy@1.10">
@@ -30,7 +31,7 @@
         <hudson.plugins.deploy.tomcat.Tomcat7xAdapter>
           <userName>tomcat</userName>
           <passwordScrambled>dG9tY2F0</passwordScrambled>
-          <url>http://aniketm5.mylabserver.com:8080</url>
+          <url>http://aniketm1.mylabserver.com:8080</url>
         </hudson.plugins.deploy.tomcat.Tomcat7xAdapter>
       </adapters>
       <contextPath>CounterWebApp</contextPath>
@@ -40,3 +41,4 @@
   </publishers>
   <buildWrappers/>
 </project>
+

@@ -39,3 +39,20 @@ template "#{node['jenkins']['master']['home']}/Continuous_Delivery_StageE_Deploy
    config "#{node['jenkins']['master']['home']}/Continuous_Delivery_StageE_DeployST.xml"
  end
 
+template "#{node['jenkins']['master']['home']}/Continuous_Delivery_StageF_FunctionalTest.xml" do
+  source 'Continuous_Delivery_StageF_FunctionalTest.xml.erb'
+ end
+
+ jenkins_job 'Continuous_Delivery_StageF_FunctionalTest' do
+   config "#{node['jenkins']['master']['home']}/Continuous_Delivery_StageF_FunctionalTest.xml"
+ end
+
+template "#{node['jenkins']['master']['home']}/Continuous_Delivery_StageG_DeployUAT.xml" do
+  source 'Continuous_Delivery_StageG_DeployUAT.xml.erb'
+ end
+
+ jenkins_job 'Continuous_Delivery_StageG_DeployUAT' do
+   config "#{node['jenkins']['master']['home']}/Continuous_Delivery_StageG_DeployUAT.xml"
+ end
+
+

@@ -1,2 +1,2 @@
-default['jenkins']['configure_slaves']['slave_ip'] = [ '54.212.228.37' ]
-#default['jenkins']['configure_slaves']['remote_fs'] = '/opt/slaves' 
+default['jenkins']['configure_slaves']['slave_ip'] = [ 'aniketm1.mylabserver.com','aniketm5.mylabserver.com' ]
+default['jenkins']['configure_slaves']['remote_fs'] = '/home/user' 
