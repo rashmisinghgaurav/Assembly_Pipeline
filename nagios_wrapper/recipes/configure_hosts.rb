@@ -10,11 +10,21 @@ source 'services.cfg.erb'
  group node['nagios']['group']
 end
 
+node['nrpe']['client']['ip_list'].each do |ip|
+ ruby_block 'enable services' do
+  block do
+   fe = Chef::Util::FileEdit.new("/usr/local/nagios/etc/hosts.cfg")    
+   fe.insert_line_if_no_match("define host{\nuse linux-box\nhost_name #{ip}\naddress #{ip}\n}", "define host{\nuse linux-box\nhost_name #{ip}\naddress #{ip}\n}")
+   fe.write_file
+  end
+ end
+end
+
 
 ruby_block "enable client services" do
   block do
     fe = Chef::Util::FileEdit.new("/usr/local/nagios/etc/nagios.cfg")
-    fe.insert_line_if_no_match("/cfg_file=/usr/local/nagios/etc/hosts.cfg/", "cfg_file=/usr/local/nagios/etc/hosts.cfg")
+    fe.insert_line_if_no_match("cfg_file=/usr/local/nagios/etc/hosts.cfg", "cfg_file=/usr/local/nagios/etc/hosts.cfg")
     fe.write_file
   end
 end
@@ -22,11 +32,12 @@ end
 
 ruby_block "enable client services" do
   block do
-    fe = Chef::Util::FileEdit.new("/usr/local/nagios/etc/services.cfg")
-    fe.insert_line_if_no_match("/cfg_file=/usr/local/nagios/etc/services.cfg/", "cfg_file=/usr/local/nagios/etc/services.cfg")
+    fe = Chef::Util::FileEdit.new("/usr/local/nagios/etc/nagios.cfg")
+    fe.insert_line_if_no_match("cfg_file=/usr/local/nagios/etc/services.cfg", "cfg_file=/usr/local/nagios/etc/services.cfg")
     fe.write_file
   end
 end
+
 
 
 

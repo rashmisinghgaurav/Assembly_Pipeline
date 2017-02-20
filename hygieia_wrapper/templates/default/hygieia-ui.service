@@ -1,0 +1,14 @@
+[Unit]
+Description=Hygieia UI Service
+After=network.target
+
+[Service]
+Type=simple
+User=<%= @user %>
+WorkingDirectory=/home/hygieia/Hygieia/UI
+ExecStart=/root/.nvm/versions/node/v5.4.1/bin/gulp serve
+Environment=PATH=/root/.nvm/versions/node/v5.4.1/bin/
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

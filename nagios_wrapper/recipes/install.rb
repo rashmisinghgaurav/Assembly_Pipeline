@@ -42,7 +42,8 @@ bash 'compile-nagios' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
     cd nagios-4.1.1
-    ./configure --with-command-group=#{node['nagios']['group']} 
+    ./configure --with-command-group=#{node['nagios']['group']} \
+        --libexecdir=/usr/local/nagios/libexec 
     make all
     make install
     make install-init

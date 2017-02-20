@@ -12,3 +12,11 @@ notification_options            d,r
 contact_groups                  admins
 register                        0                       ; DONT REGISTER THIS - ITS A TEMPLATE
 }
+## Default
+define host{
+use                             linux-box               ; Inherit default values from a template
+host_name                       aniketm5.mylabserver.com                        ; The name we're giving to this server
+alias                           CentOS 6                ; A longer name for the server
+address                         aniketm5.mylabserver.com            ; IP address of Remote Linux host
+}
+

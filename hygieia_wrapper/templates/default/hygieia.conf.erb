@@ -1,0 +1,20 @@
+<VirtualHost _default_:80>
+  DocumentRoot /var/www/hygieia.local
+
+<Directory /var/www/hygieia.local>
+  Options FollowSymLinks Indexes
+  AllowOverride None
+</Directory>
+
+<Location />
+  Require all granted
+</Location>
+
+<Location /api>
+  Require all granted
+</Location>
+
+  ProxyPass /api http://127.0.0.1:8080/api
+  ProxyPassReverse /api http://127.0.0.1:8080/api
+
+</VirtualHost>
