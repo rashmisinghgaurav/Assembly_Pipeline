@@ -15,16 +15,18 @@ docker_image 'sonarqube' do
   not_if "docker images sonarqube | grep sonarqube"
 end
 
-docker_volume 'sonarqube' do
-  action :create
-not_if "docker volume ls | grep sonarqube"
-end
+
+
+#docker_volume 'sonarqube' do
+#  action :create
+#not_if "docker volume ls | grep sonarqube"
+#end
 
 docker_container 'sonarqube' do
   repo 'sonarqube'
   tag 'latest'
   port '8084:9000'
-  volume 'sonarqube:/sonarqube'
+#  volume 'sonarqube:/sonarqube'
 #  command 'rm -rf /opt/sonarqube/temp'
 #  kill_after 300
   action :run

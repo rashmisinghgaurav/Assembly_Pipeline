@@ -20,6 +20,9 @@ jenkins_plugin 'token-macro' do
 version '2.0'
 end
 
+jenkins_plugin 'git' do
+version '3.0.5'
+end
 
 file "#{node['jenkins']['master']['home']}/plugins_installed" do
   content node['jenkins']['master']['plugins_list'].map(&:inspect).join(",")

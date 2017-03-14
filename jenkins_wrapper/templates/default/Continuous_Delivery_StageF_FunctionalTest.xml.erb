@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.5">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -21,8 +21,8 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
- <assignedNode>aniketm5.mylabserver.com</assignedNode>
- <canRoam>true</canRoam>
+  <assignedNode>aniketm1.mylabserver.com</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
@@ -39,7 +39,7 @@
     </jenkins.triggers.ReverseBuildTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>/workspace/OrclDemo</customWorkspace>
+  <customWorkspace>workspace/OrclDemo</customWorkspace>
   <builders>
     <hudson.tasks.Maven>
       <targets>-Pacceptance test</targets>
@@ -54,3 +54,4 @@
   <publishers/>
   <buildWrappers/>
 </project>
+

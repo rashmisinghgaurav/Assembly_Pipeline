@@ -2,13 +2,13 @@ user node['nagios']['user'] do
   action :create
 end
 
-#ruby_block "enable kernel updates" do
-#  block do
-#    fe = Chef::Util::FileEdit.new("/etc/yum.conf")
-#    fe.search_file_replace(/exclude=kernel* redhat-release*/,"exclude=redhat-release*")
-#    fe.write_file
-#  end
-#end
+ruby_block "enable kernel updates" do
+  block do
+    fe = Chef::Util::FileEdit.new("/etc/yum.conf")
+    fe.search_file_replace("exclude=kernel* redhat-release*","exclude=redhat-release*")
+    fe.write_file
+  end
+end
 
 package 'httpd'
 package 'php'

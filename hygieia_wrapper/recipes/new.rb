@@ -86,12 +86,12 @@ directory node['hygieia']['home'] do
   recursive true
 end
 
-#template "#{node['hygieia']['home']}/core/pom.xml" do
-# source "pom.xml.erb"
-#  user node['hygieia_liatrio']['user']
-#  group node['hygieia_liatrio']['group']
-#  mode 0755
-#end
+template "#{node['hygieia']['home']}/hygieia-jenkins-plugin/pom.xml" do
+ source "pom.xml.erb"
+  user node['hygieia_liatrio']['user']
+  group node['hygieia_liatrio']['group']
+  mode 0755
+end
 
 
 
@@ -101,7 +101,7 @@ bash 'compile hygieia_core' do
  cd #{node['hygieia']['home']}/core
  mvn clean install
 EOH
-#not_if { ::File.exist?("#{node['hygieia']['home']}/core/target/core-2.0.5-SNAPSHOT.jar") }
+not_if { ::File.exist?("#{node['hygieia']['home']}/core/target/core-2.0.5-SNAPSHOT.jar") }
 end
 
 bash 'compile hygieia_jenkins' do
